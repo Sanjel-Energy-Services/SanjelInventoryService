@@ -1,0 +1,113 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MetaShare.Common.Core" Version="1.0.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EService.Daos">
+      <HintPath>..\..\SanjelEService\Lib\EService.Daos.dll</HintPath>
+    </Reference>
+    <Reference Include="EService.Daos.Interfaces">
+      <HintPath>..\..\SanjelEService\Lib\EService.Daos.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="MetaShare.Common.Core">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\net461\MetaShare.Common.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MetaShare.Common.Foundation">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\net461\MetaShare.Common.Foundation.dll</HintPath>
+    </Reference>
+    <Reference Include="MetaShare.Common.ServiceModel">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\net461\MetaShare.Common.ServiceModel.dll</HintPath>
+    </Reference>
+    <Reference Include="MetaShare.Common.Utilities">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\net461\MetaShare.Common.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.BusinessEntities">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.BusinessEntities.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.BusinessEntities.Standard">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.BusinessEntities.Standard.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.ApiServices">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\netstandard2.0\Sanjel.Common.ApiServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.ApiServices.Interfaces">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\netstandard2.0\Sanjel.Common.ApiServices.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.BusinessEntities">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.Common.BusinessEntities.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.BusinessEntities.Mdd">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.Common.BusinessEntities.Mdd.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.BusinessEntities.Standard">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.Common.BusinessEntities.Standard.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.Core">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.Common.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.Daos">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.Common.Daos.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.Daos.Interfaces">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.Common.Daos.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.Gateways">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.Common.Gateways.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.Gateways.Interfaces">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.Common.Gateways.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.Services">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.Common.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.Services.Interfaces">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.Common.Services.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Common.Services.Interfaces.Standard">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.Common.Services.Interfaces.Standard.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Services">
+      <HintPath>..\..\SanjelEService\Lib\Sanjel.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Services.Interfaces">
+      <HintPath>..\..\SanjelEService\Lib\Sanjel.Services.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Sanjel.Services.Interfaces.Standard">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\Sanjel.Services.Interfaces.Standard.dll</HintPath>
+    </Reference>
+    <Reference Include="SanjelData.Daos">
+      <HintPath>..\..\eServiceMDM\SanjelData\SanjelData.Daos\obj\Debug\netstandard2.0\SanjelData.Daos.dll</HintPath>
+    </Reference>
+    <Reference Include="SanjelData.Daos.Interfaces">
+      <HintPath>..\..\eServiceMDM\SanjelData\SanjelData.Daos.Interfaces\obj\Debug\netstandard2.0\SanjelData.Daos.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="SanjelData.Entities">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\netstandard2.0\SanjelData.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="SanjelData.Services">
+      <HintPath>..\..\eServiceMDM\SanjelData\SanjelData.Services\obj\Debug\netstandard2.0\SanjelData.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="SanjelData.Services.Interfaces">
+      <HintPath>..\..\eServiceMDM\Lib\netstandard2.0\SanjelData.Services.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Primitives">
+      <HintPath>..\..\SanjelCommonLibrary\Lib\System.ServiceModel.Primitives.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
