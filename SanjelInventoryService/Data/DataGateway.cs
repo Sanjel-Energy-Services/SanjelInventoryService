@@ -62,6 +62,24 @@ namespace eServiceOnline.Gateway
             return new Collection<Product>(productService.SelectAllByDateTime(effectiveDateTime));
         }
 
+        public static Collection<AdditionMethod> GetAdditionMethodAsOfDate(DateTime effectiveDateTime)
+        {
+            IAdditionMethodService additionMethodService = MetaShare.Common.Core.CommonService.ServiceFactory.Instance.GetService<IAdditionMethodService>();
+            return new Collection<AdditionMethod>(additionMethodService.SelectAllByDateTime(effectiveDateTime));
+        }
+
+        public static Collection<AdditiveBlendMethod> GetAdditiveBlendMethodAsOfDate(DateTime effectiveDateTime)
+        {
+            IAdditiveBlendMethodService additiveBlendMethodService = MetaShare.Common.Core.CommonService.ServiceFactory.Instance.GetService<IAdditiveBlendMethodService>();
+            return new Collection<AdditiveBlendMethod>(additiveBlendMethodService.SelectAllByDateTime(effectiveDateTime));
+        }
+
+        public static Collection<BlendAdditiveMeasureUnit> GetBlendAdditiveMeasureUnitAsOfDate(DateTime effectiveDateTime)
+        {
+            IBlendAdditiveMeasureUnitService blendAdditiveMeasureUnitService = MetaShare.Common.Core.CommonService.ServiceFactory.Instance.GetService<IBlendAdditiveMeasureUnitService>();
+            return new Collection<BlendAdditiveMeasureUnit>(blendAdditiveMeasureUnitService.SelectAllByDateTime(effectiveDateTime));
+        }
+
         public static Job GetJobByUniqueId(string jobUniqueId)
         {
             if (string.IsNullOrEmpty(jobUniqueId)) return null;

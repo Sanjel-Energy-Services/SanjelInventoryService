@@ -123,9 +123,12 @@ namespace eServiceOnline.Data
         {
             BlendChemical blendChemical = null;
             Collection<BlendChemical> blendChemicalList = MetaShare.Common.Core.Entities.Common.DeepClone(GetBlendChemicalCollection(chemicalsAsOfDate)) as Collection<BlendChemical>;
+            Collection<AdditionMethod> additionMethodList = MetaShare.Common.Core.Entities.Common.DeepClone(DataGateway.GetAdditionMethodAsOfDate(chemicalsAsOfDate)) as Collection<AdditionMethod>;
+            Collection<AdditiveBlendMethod> additiveBlendMethodList = MetaShare.Common.Core.Entities.Common.DeepClone(DataGateway.GetAdditiveBlendMethodAsOfDate(chemicalsAsOfDate)) as Collection<AdditiveBlendMethod>;
+            Collection<BlendAdditiveMeasureUnit> blendAdditiveMeasureUnitList = MetaShare.Common.Core.Entities.Common.DeepClone(DataGateway.GetBlendAdditiveMeasureUnitAsOfDate(chemicalsAsOfDate)) as Collection<BlendAdditiveMeasureUnit>;
             try
             {
-                blendChemical = BlendSection.CovertToBlendChemicalFromBlendSection(blendChemicalList, bs);
+                blendChemical = BlendSection.CovertToBlendChemicalFromBlendSection(blendChemicalList, bs, additionMethodList, additiveBlendMethodList, blendAdditiveMeasureUnitList);
             }
             catch (Exception ex)
             {
