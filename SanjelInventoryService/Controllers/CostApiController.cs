@@ -106,6 +106,60 @@ namespace SanjelInventoryService.Controllers
             return this.Json(new { costCollection = outputCostCollection }, new JsonSerializerSettings() { Formatting = Formatting.Indented });
         }
 
+        [Route("GetProductsCostByProgramId")]
+        public JsonResult GetProductsCostByProgramId(int programId, int jobSectionId, bool byEndOfMonthWac)
+        {
+            Collection<OutputCost> outputCostCollection = new Collection<OutputCost>();
+            DateTime programDate = DateTime.MinValue;
+            string programNumber = "";
+            string servicePointSbsId = "";
+            var freightCost = 0.00;
+
+            Sanjel.BusinessEntities.Programs.Program program = DataGateway.GetProgramById(programId);
+            if (program != null)
+            {
+                programDate = program.ProgramGeneratedDate ?? DateTime.Today;
+                programNumber = program.ProgramId;
+                servicePointSbsId = WebContext.DistrictSBS[(program.JobData != null && program.JobData.ServicePoint != null) ? program.JobData.ServicePoint.Id : -1] ?? "";
+            }
+
+            if (programDate != DateTime.MinValue && servicePointSbsId != "")
+            {
+                DateTime costAsOfDate = programDate.Date.AddMonths(byEndOfMonthWac ? 1 : 0);
+                DateTime chemAsOfDate = DateTime.Today;
+                Sanjel.BusinessEntities.Programs.ProgramPumpingJobSection jobSection = null;
+
+                if (program.PumpingJobSections != null)
+                {
+                    foreach (Sanjel.BusinessEntities.Programs.ProgramPumpingJobSection js in program.PumpingJobSections)
+                    {
+                        if (js.Id == jobSectionId)
+                        {
+                            jobSection = js;
+                            break;
+                        }
+                    }
+                }
+
+                if (
+                    jobSection != null
+                    && jobSection.ProductSection != null
+                    && jobSection.ProductSection.BlendSections != null
+                    && jobSection.ProductSection.BlendSections.Any()
+                    && WebContext.GetBlendChemicalCollection(chemAsOfDate) != null
+                    && WebContext.GetPurchasePriceCollection(costAsOfDate) != null
+                    )
+                {
+                    foreach (BlendSection bs in jobSection.ProductSection.BlendSections)
+                    {
+                        ProcessBlendSectionCost(bs, servicePointSbsId, freightCost, ref outputCostCollection, costAsOfDate, chemAsOfDate, false);
+                    }
+                }
+            }
+
+            return this.Json(new { ProgramId = programId, JobSectionId = jobSectionId, ProgramNumber = programNumber, ProgramDate = programDate, costCollection = outputCostCollection });
+        }
+
         [Route("GetProductsCostByJobUniqueId")] 
         public JsonResult GetProductsCostByJobUniqueId(string uniqueId, bool byEndOfMonthWac)
         {

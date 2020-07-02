@@ -90,6 +90,16 @@ namespace eServiceOnline.Gateway
             return jobService?.GetJobByUniqueId(jobUniqueId);
         }
 
+        public static Sanjel.BusinessEntities.Programs.Program GetProgramById(int programId)
+        {
+            if (programId <= 0) return null;
+
+            Sanjel.Services.Interfaces.IProgramService programService = MetaShare.Common.ServiceModel.Services.ServiceFactory.Instance.GetService(typeof(Sanjel.Services.Interfaces.IProgramService)) as Sanjel.Services.Interfaces.IProgramService;
+            if (programService == null) throw new Exception("programService must be registered in service factory");
+
+            return programService?.GetProgramById(programId);
+        }
+
         public static ServiceReport GetServiceReportByUniqueId(string uniqueId)
         {
             if (string.IsNullOrEmpty(uniqueId)) return null;

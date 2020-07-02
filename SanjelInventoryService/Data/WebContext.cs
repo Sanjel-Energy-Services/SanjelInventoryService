@@ -366,6 +366,7 @@ namespace eServiceOnline.Data
             { "Calgary - Head Office", "D675" },
             { "Lac La Biche", "D606" },
             { "Fort St John", "D615" },
+            { "Fort St. John", "D615" },
             { "Edmonton", "D602" },
             { "Brooks", "D600" },
             { "Swift Current", "D617" },
