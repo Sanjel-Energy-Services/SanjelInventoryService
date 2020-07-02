@@ -132,11 +132,14 @@ namespace SanjelInventoryService.Controllers
                     {
                         Chemical cm = avail.FirstOrDefault(c => c.IIN == (bcs.BlendChemical.Product.InventoryNumber ?? "-"));
 
+                        string name = cm != null ? cm.Name : (bcs.Name != null ? bcs.Name : bcs.BlendChemical.Name);
+
                         outputAvailabilityCollection.Add(
                             new OutputAvailability()
                             {
                                 Id = bs.Id,  //bcs.Id,
-                                Name = cm != null ? cm.Name : "NA", //bcs.Name,
+                                //Name = cm != null ? cm.Name : "NA", //bcs.Name,
+                                Name = name,
                                 IIN = bcs.BlendChemical.Product.InventoryNumber ?? "",
                                 Quantity = bcs.Amount,
                                 Unit = bcs.Unit.Name,
