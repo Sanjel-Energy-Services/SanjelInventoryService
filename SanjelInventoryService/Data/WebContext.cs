@@ -138,7 +138,8 @@ namespace eServiceOnline.Data
 
         static public Collection<BlendChemicalSection> GetAllBreakDowns(BlendSection bs, BlendChemical blendChemical)
         {
-            var blendQuantity = (bs.Quantity ?? 0.0) * (bs.BlendAmountUnit.Abbreviation.Equals("m3") || bs.BlendAmountUnit.Abbreviation.Equals("t") ? 1000 : 1);
+            //var blendQuantity = (bs.Quantity ?? 0.0) * (bs.BlendAmountUnit.Abbreviation.Equals("m3") || bs.BlendAmountUnit.Abbreviation.Equals("t") ? 1000 : 1);
+            var blendQuantity = (bs.Quantity ?? 0.0) * 1;
 
             BlendChemicalSection baseBlendSection = blendChemical.BlendRecipe.BlendChemicalSections.FirstOrDefault(p => p.IsBaseBlend);
             List<BlendChemicalSection> additiveBlendSections = blendChemical.BlendRecipe.BlendChemicalSections.Where(p => !p.IsBaseBlend).ToList();
@@ -150,7 +151,8 @@ namespace eServiceOnline.Data
             Collection<BlendChemicalSection> additionalBlendBreakDowns;
             double totalBlendWeight;
             double baseBlendWeight;
-            BlendBreakDownCalculator.GetAllBlendBreakDown(blendChemical.BlendRecipe, blendQuantity, false, bs.MixWaterRequirement ?? 1.0, out allBlendBreakDowns, out baseBlendBreakDowns, out additiveBlendBreakDowns, out additionalBlendBreakDowns, out totalBlendWeight, out baseBlendWeight);
+            //BlendBreakDownCalculator.GetAllBlendBreakDown(blendChemical.BlendRecipe, blendQuantity, false, bs.MixWaterRequirement ?? 1.0, out allBlendBreakDowns, out baseBlendBreakDowns, out additiveBlendBreakDowns, out additionalBlendBreakDowns, out totalBlendWeight, out baseBlendWeight);
+            BlendBreakDownCalculator.GetAllBlendBreakDown1(blendChemical.BlendRecipe, blendQuantity, null, false, bs.MixWaterRequirement ?? 1.0, out allBlendBreakDowns, out baseBlendBreakDowns, out additiveBlendBreakDowns, out additionalBlendBreakDowns, out totalBlendWeight, out baseBlendWeight);
 
             return allBlendBreakDowns;
         }
