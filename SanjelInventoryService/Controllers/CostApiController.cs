@@ -79,22 +79,40 @@ namespace SanjelInventoryService.Controllers
                                 ? WebContext.GetAdditiveTypeCollection(DateTime.Today).FirstOrDefault(a => a.Id == add.Id)
                                 : WebContext.GetAdditiveTypeCollection(DateTime.Today).FirstOrDefault(a => (a.Name ?? "").Trim().ToUpper() == add.Name.Trim().ToUpper());
 
+                            BlendAdditiveSection bas = null;
+
                             if (at == null)
+                            {
                                 throw (new Exception("Additive Name was not found for '" + add.Name + "'! "));
+                                //bas =
+                                //    new BlendAdditiveSection()
+                                //    {
+                                //        Id = i++,
+                                //        AdditiveType = new SanjelBusinessEntities.AdditiveType() { Id = add.Id, Name = add.Name + " - Not Found" },
+                                //        AdditionMethod = new SanjelBusinessEntities.AdditiveMethodType(),
+                                //        AdditiveAmountUnit = UnitOfMeasure.MeasureUnit.BlendAdditiveUnits.FirstOrDefault(c => c.Name == WebContext.GetUnitName(add.Unit)),
+                                //        Amount = add.Quantity,
+                                //        BaseName = ""
+                                //    };
+                            }
+                            else
+                            {
+                                bas =
+                                    new BlendAdditiveSection()
+                                    {
+                                        Id = i++,
+                                        AdditiveType = new SanjelBusinessEntities.AdditiveType() { Id = at.Id, Name = at.Name },
+                                        AdditionMethod = new SanjelBusinessEntities.AdditiveMethodType(),
+                                        AdditiveAmountUnit = UnitOfMeasure.MeasureUnit.BlendAdditiveUnits.FirstOrDefault(c => c.Name == WebContext.GetUnitName(add.Unit)),
+                                        Amount = add.Quantity,
+                                        BaseName = ""
+                                    };
+                            }
 
                             if (bs.BlendAdditiveSections == null)
                                 bs.BlendAdditiveSections = new Collection<BlendAdditiveSection>();
 
-                            BlendAdditiveSection bas =
-                                new BlendAdditiveSection()
-                                {
-                                    Id = i++,
-                                    AdditiveType = new SanjelBusinessEntities.AdditiveType() { Id = at.Id, Name = at.Name },
-                                    AdditionMethod = new SanjelBusinessEntities.AdditiveMethodType(),
-                                    AdditiveAmountUnit = UnitOfMeasure.MeasureUnit.BlendAdditiveUnits.FirstOrDefault(c => c.Name == WebContext.GetUnitName(add.Unit)),
-                                    Amount = add.Quantity,
-                                    BaseName = ""
-                                };
+
                             bs.BlendAdditiveSections.Add(bas);
                         }
                     }
@@ -213,12 +231,93 @@ namespace SanjelInventoryService.Controllers
                 try
                 {
                     var totalCost = 0.0;
+                    var totalQantity = 0.0;
+                    bool useBaseBlendQantity = false;
+
                     Collection<BlendChemicalSection> allBlendBreakDowns = WebContext.GetAllBreakDowns(bs, blendChemical);
 
                     foreach (BlendChemicalSection bcs in allBlendBreakDowns)
                     {
                         var cost = BlendCostItem.CalculateCost(WebContext.GetPurchasePriceCollection(costAsOfDate), bcs.BlendChemical, freightCost, true, servicePointSbsId);
                         totalCost += cost * bcs.Amount;
+
+                        var adjustedQuantity = bcs.Amount;
+
+                        switch ((bs.BlendAmountUnit == null ? "" : bs.BlendAmountUnit.Name).ToLower())
+                        {
+                            case "t":
+                            case "mt":
+                            case "tonne":
+                            case "tonnes":
+                            case "tone":
+                            case "tones":
+                                switch (bcs.Unit.Name.ToLower())
+                                {
+                                    case "t":
+                                    case "mt":
+                                    case "tonne":
+                                    case "tonnes":
+                                    case "tone":
+                                    case "tones":
+                                        adjustedQuantity = adjustedQuantity;
+                                        break;
+                                    case "kg":
+                                    case "kilogram":
+                                    case "kilograms":
+                                        adjustedQuantity = adjustedQuantity / 1000;
+                                        break;
+                                    case "m3":
+                                    case "cubic meter":
+                                    case "cubic meters":
+                                        adjustedQuantity = adjustedQuantity * bcs.BlendChemical.Density / 1000;
+                                        break;
+                                    case "l":
+                                    case "liter":
+                                    case "liters":
+                                        adjustedQuantity = adjustedQuantity / 1000 * bcs.BlendChemical.Density / 1000;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case "m3":
+                            case "cubic meter":
+                            case "cubic meters":
+                                //switch (bcs.Unit.Name.ToLower())
+                                //{
+                                //    case "t":
+                                //    case "mt":
+                                //    case "tonne":
+                                //    case "tonnes":
+                                //    case "tone":
+                                //    case "tones":
+                                //        adjustedQuantity = adjustedQuantity * 1000 / bcs.BlendChemical.Density;
+                                //        break;
+                                //    case "kg":
+                                //    case "kilogram":
+                                //    case "kilograms":
+                                //        adjustedQuantity = adjustedQuantity / bcs.BlendChemical.Density;
+                                //        break;
+                                //    case "m3":
+                                //    case "cubic meter":
+                                //    case "cubic meters":
+                                //        //adjustedQuantity = adjustedQuantity;
+                                //        break;
+                                //    case "l":
+                                //    case "liter":
+                                //    case "liters":
+                                //        adjustedQuantity = adjustedQuantity / 1000;
+                                //        break;
+                                //    default:
+                                //        break;
+                                //}
+                                useBaseBlendQantity = true;
+                                break;
+                            default:
+                                break;
+                        }
+
+                        totalQantity += adjustedQuantity;
 
                         if (includeDetails)
                             outputCostCollection.Add(
@@ -245,7 +344,7 @@ namespace SanjelInventoryService.Controllers
                             Name = blend,
                             IIN = inn,
                             PbCode = code,
-                            Quantity = bs.Quantity ?? 0,
+                            Quantity = useBaseBlendQantity ? bs.Quantity ?? 0 : totalQantity,
                             Unit = bs.BlendAmountUnit == null ? "" : bs.BlendAmountUnit.Name,
                             IsDetail = false
                         });
