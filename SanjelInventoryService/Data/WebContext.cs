@@ -105,8 +105,9 @@ namespace eServiceOnline.Data
         static public void PrepareBlendSection(ref BlendSection bs)
         {
             //Replace "LITEmix PRO RD" (294) with "LITEmix PRO" (289) for cost calculation as per Jason's sudgestion
-            if (bs.BlendFluidType != null && bs.BlendFluidType.Id == 294)
-                bs.BlendFluidType.Id = 289;
+            //Commented on Dec 02, 2020 to check if an original issue was fixed (nobody remember now what it was)
+            //if (bs.BlendFluidType != null && bs.BlendFluidType.Id == 294)
+            //    bs.BlendFluidType.Id = 289;
 
             //Remove empty records in additives list
             if (bs.BlendAdditiveSections != null && bs.BlendAdditiveSections.Count > 0)
