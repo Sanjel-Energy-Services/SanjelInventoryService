@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MetaShare.Common.Core" Version="1.0.0.6" />
+    <PackageReference Include="MetaShare.Common.Core" Version="1.0.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />

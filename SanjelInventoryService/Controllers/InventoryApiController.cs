@@ -50,8 +50,8 @@ namespace SanjelInventoryService.Controllers
                 foreach (Blend blend in inputBlends.Blends)
                 {
                     bft = blend.Id > 0
-                        ? WebContext.GetBaseBlendTypeCollection(DateTime.Today).FirstOrDefault(b => b.Id == blend.Id)
-                        : WebContext.GetBaseBlendTypeCollection(DateTime.Today).FirstOrDefault(b => (b.Name ?? "").Trim().ToUpper() == blend.Name.Trim().ToUpper());
+                        ? WebContext.GetBaseBlendTypeCollection(DateTime.Now).FirstOrDefault(b => b.Id == blend.Id)
+                        : WebContext.GetBaseBlendTypeCollection(DateTime.Now).FirstOrDefault(b => (b.Name ?? "").Trim().ToUpper() == blend.Name.Trim().ToUpper());
 
                     if (bft == null)
                         throw (new Exception("Blend Name was not found for '" + blend.Name + "'! "));
@@ -71,8 +71,8 @@ namespace SanjelInventoryService.Controllers
                         foreach (Additive add in (blend.Additives))
                         {
                             at = add.Id > 0
-                                ? WebContext.GetAdditiveTypeCollection(DateTime.Today).FirstOrDefault(a => a.Id == add.Id)
-                                : WebContext.GetAdditiveTypeCollection(DateTime.Today).FirstOrDefault(a => (a.Name ?? "").Trim().ToUpper() == add.Name.Trim().ToUpper());
+                                ? WebContext.GetAdditiveTypeCollection(DateTime.Now).FirstOrDefault(a => a.Id == add.Id)
+                                : WebContext.GetAdditiveTypeCollection(DateTime.Now).FirstOrDefault(a => (a.Name ?? "").Trim().ToUpper() == add.Name.Trim().ToUpper());
 
                             if (at == null)
                                 throw (new Exception("Additive Name was not found for '" + add.Name + "'! "));
@@ -93,7 +93,7 @@ namespace SanjelInventoryService.Controllers
                             bs.BlendAdditiveSections.Add(bas);
                         }
                     }
-                    ProcessBlendSectionAvailability(bs, servicePointSbsId, ref outputAvailabilityCollection, DateTime.Today);
+                    ProcessBlendSectionAvailability(bs, servicePointSbsId, ref outputAvailabilityCollection, DateTime.Now);
                 }
             }
             return this.Json(new { costCollection = outputAvailabilityCollection }, new JsonSerializerSettings() { Formatting = Formatting.Indented });

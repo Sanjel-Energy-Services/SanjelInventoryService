@@ -30,54 +30,63 @@ namespace eServiceOnline.Gateway
         public static Collection<BlendRecipe> GetBlendRecipesAsOfDate(DateTime effectiveDateTime)
         {
             IBlendRecipeService blendRecipeService = MetaShare.Common.Core.CommonService.ServiceFactory.Instance.GetService<IBlendRecipeService>();
-            return new Collection<BlendRecipe>(blendRecipeService.SelectAllByDateTime(effectiveDateTime));
+            //return new Collection<BlendRecipe>(blendRecipeService.SelectAllByDateTime(effectiveDateTime));
+            return new Collection<BlendRecipe>(blendRecipeService.SelectAll());
         }
 
         public static Collection<BlendChemical> GetBlendChemicalsAsOfDate(DateTime effectiveDateTime)
         {
             IBlendChemicalService blendChemicalService = MetaShare.Common.Core.CommonService.ServiceFactory.Instance.GetService<IBlendChemicalService>();
-            return new Collection<BlendChemical>(blendChemicalService.SelectAllByDateTime(effectiveDateTime));
+            //return new Collection<BlendChemical>(blendChemicalService.SelectAllByDateTime(effectiveDateTime));
+            return new Collection<BlendChemical>(blendChemicalService.SelectAll());
         }
 
         public static Collection<AdditiveType> GetAdditiveTypesAsOfDate(DateTime effectiveDateTime)
         {
             IAdditiveTypeService additiveTypeService = MetaShare.Common.Core.CommonService.ServiceFactory.Instance.GetService<IAdditiveTypeService>();
-            return new Collection<AdditiveType>(additiveTypeService.SelectAllByDateTime(effectiveDateTime));
+            //return new Collection<AdditiveType>(additiveTypeService.SelectAllByDateTime(effectiveDateTime));
+            return new Collection<AdditiveType>(additiveTypeService.SelectAll());
         }
         public static Collection<BlendFluidType> GetBaseBlendTypesAsOfDate(DateTime effectiveDateTime)
         {
             IBlendFluidTypeService blendFluidTypeService = MetaShare.Common.Core.CommonService.ServiceFactory.Instance.GetService<IBlendFluidTypeService>();
-            return new Collection<BlendFluidType>(blendFluidTypeService.SelectAllByDateTime(effectiveDateTime));
+            //return new Collection<BlendFluidType>(blendFluidTypeService.SelectAllByDateTime(effectiveDateTime));
+            return new Collection<BlendFluidType>(blendFluidTypeService.SelectAll());
         }
 
         public static Collection<BlendChemicalSection> GetBlendChemicalSectionsAsOfDate(DateTime effectiveDateTime)
         {
             IBlendChemicalSectionService blendChemicalSectionService = MetaShare.Common.Core.CommonService.ServiceFactory.Instance.GetService<IBlendChemicalSectionService>();
-            return new Collection<BlendChemicalSection>(blendChemicalSectionService.SelectAllByDateTime(effectiveDateTime));
+            //return new Collection<BlendChemicalSection>(blendChemicalSectionService.SelectAllByDateTime(effectiveDateTime));
+            return new Collection<BlendChemicalSection>(blendChemicalSectionService.SelectAll());
         }
 
         public static Collection<Product> GetProductsAsOfDate(DateTime effectiveDateTime)
         {
             IProductService productService = MetaShare.Common.Core.CommonService.ServiceFactory.Instance.GetService<IProductService>();
-            return new Collection<Product>(productService.SelectAllByDateTime(effectiveDateTime));
+            //return new Collection<Product>(productService.SelectAllByDateTime(effectiveDateTime));
+            return new Collection<Product>(productService.SelectAll());
         }
 
         public static Collection<AdditionMethod> GetAdditionMethodAsOfDate(DateTime effectiveDateTime)
         {
             IAdditionMethodService additionMethodService = MetaShare.Common.Core.CommonService.ServiceFactory.Instance.GetService<IAdditionMethodService>();
-            return new Collection<AdditionMethod>(additionMethodService.SelectAllByDateTime(effectiveDateTime));
+            //return new Collection<AdditionMethod>(additionMethodService.SelectAllByDateTime(effectiveDateTime));
+            return new Collection<AdditionMethod>(additionMethodService.SelectAll());
         }
 
         public static Collection<AdditiveBlendMethod> GetAdditiveBlendMethodAsOfDate(DateTime effectiveDateTime)
         {
             IAdditiveBlendMethodService additiveBlendMethodService = MetaShare.Common.Core.CommonService.ServiceFactory.Instance.GetService<IAdditiveBlendMethodService>();
-            return new Collection<AdditiveBlendMethod>(additiveBlendMethodService.SelectAllByDateTime(effectiveDateTime));
+            //return new Collection<AdditiveBlendMethod>(additiveBlendMethodService.SelectAllByDateTime(effectiveDateTime));
+            return new Collection<AdditiveBlendMethod>(additiveBlendMethodService.SelectAll());
         }
 
         public static Collection<BlendAdditiveMeasureUnit> GetBlendAdditiveMeasureUnitAsOfDate(DateTime effectiveDateTime)
         {
             IBlendAdditiveMeasureUnitService blendAdditiveMeasureUnitService = MetaShare.Common.Core.CommonService.ServiceFactory.Instance.GetService<IBlendAdditiveMeasureUnitService>();
-            return new Collection<BlendAdditiveMeasureUnit>(blendAdditiveMeasureUnitService.SelectAllByDateTime(effectiveDateTime));
+            //return new Collection<BlendAdditiveMeasureUnit>(blendAdditiveMeasureUnitService.SelectAllByDateTime(effectiveDateTime));
+            return new Collection<BlendAdditiveMeasureUnit>(blendAdditiveMeasureUnitService.SelectAll());
         }
 
         public static Job GetJobByUniqueId(string jobUniqueId)

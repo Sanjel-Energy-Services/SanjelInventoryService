@@ -55,11 +55,14 @@ namespace SanjelInventoryService.Controllers
                 foreach (Blend blend in inputBlends.Blends)
                 {
                     bft = blend.Id > 0
-                        ? WebContext.GetBaseBlendTypeCollection(DateTime.Today).FirstOrDefault(b => b.Id == blend.Id)
-                        : WebContext.GetBaseBlendTypeCollection(DateTime.Today).FirstOrDefault(b => (b.Name ?? "").Trim().ToUpper() == blend.Name.Trim().ToUpper());
+                        ? WebContext.GetBaseBlendTypeCollection(DateTime.Now).FirstOrDefault(b => b.Id == blend.Id)
+                        : WebContext.GetBaseBlendTypeCollection(DateTime.Now).FirstOrDefault(b => (b.Name ?? "").Trim().ToUpper() == blend.Name.Trim().ToUpper());
 
                     if (bft == null)
                         throw (new Exception("Blend Name was not found for '" + blend.Name + "'! "));
+
+                    if (blend.Unit == "0")
+                        blend.Unit = "m3";
 
                     BlendSection bs =
                         new BlendSection()
@@ -76,8 +79,8 @@ namespace SanjelInventoryService.Controllers
                         foreach (Additive add in (blend.Additives))
                         {
                             at = add.Id > 0
-                                ? WebContext.GetAdditiveTypeCollection(DateTime.Today).FirstOrDefault(a => a.Id == add.Id)
-                                : WebContext.GetAdditiveTypeCollection(DateTime.Today).FirstOrDefault(a => (a.Name ?? "").Trim().ToUpper() == add.Name.Trim().ToUpper());
+                                ? WebContext.GetAdditiveTypeCollection(DateTime.Now).FirstOrDefault(a => a.Id == add.Id)
+                                : WebContext.GetAdditiveTypeCollection(DateTime.Now).FirstOrDefault(a => (a.Name ?? "").Trim().ToUpper() == add.Name.Trim().ToUpper());
 
                             BlendAdditiveSection bas = null;
 
@@ -117,7 +120,7 @@ namespace SanjelInventoryService.Controllers
                         }
                     }
 
-                    ProcessBlendSectionCost(bs, servicePointSbsId, freightCost, ref outputCostCollection, DateTime.Today, DateTime.Today, inputBlends.WithDetails);
+                    ProcessBlendSectionCost(bs, servicePointSbsId, freightCost, ref outputCostCollection, DateTime.Now, DateTime.Now, inputBlends.WithDetails);
                 }
             }
 
@@ -136,7 +139,7 @@ namespace SanjelInventoryService.Controllers
             Sanjel.BusinessEntities.Programs.Program program = DataGateway.GetProgramById(programId);
             if (program != null)
             {
-                programDate = program.ProgramGeneratedDate ?? DateTime.Today;
+                programDate = program.ProgramGeneratedDate ?? DateTime.Now;
                 programNumber = program.ProgramId;
                 servicePointSbsId = WebContext.DistrictSBS[(program.JobData != null && program.JobData.ServicePoint != null) ? program.JobData.ServicePoint.Id : -1] ?? "";
             }
@@ -144,7 +147,7 @@ namespace SanjelInventoryService.Controllers
             if (programDate != DateTime.MinValue && servicePointSbsId != "")
             {
                 DateTime costAsOfDate = programDate.Date.AddMonths(byEndOfMonthWac ? 1 : 0);
-                DateTime chemAsOfDate = DateTime.Today;
+                DateTime chemAsOfDate = DateTime.Now;
                 Sanjel.BusinessEntities.Programs.ProgramPumpingJobSection jobSection = null;
 
                 if (program.PumpingJobSections != null)
@@ -198,7 +201,7 @@ namespace SanjelInventoryService.Controllers
             if (jobDate != DateTime.MinValue && servicePointSbsId != "")
             {
                 DateTime costAsOfDate = jobDate.Date.AddMonths(byEndOfMonthWac ? 1 : 0);
-                DateTime chemAsOfDate = DateTime.Today;
+                DateTime chemAsOfDate = DateTime.Now;
                 PumpingServiceReport sr = (PumpingServiceReport)DataGateway.GetServiceReportByUniqueId(uniqueId);
 
                 if (
