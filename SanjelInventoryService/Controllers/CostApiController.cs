@@ -64,13 +64,19 @@ namespace SanjelInventoryService.Controllers
                     if (blend.Unit == "0")
                         blend.Unit = "m3";
 
+                    double waterMix = 0.0;
+                    double.TryParse(blend.WaterMix, out waterMix);
+
+                    waterMix = waterMix <= 0.0 ? 1.0 : waterMix;
+
                     BlendSection bs =
                         new BlendSection()
                         {
                             Id = blend.Idx,  //bsId++,
                             BlendFluidType = new SanjelBusinessEntities.BlendFluidType() { Id = bft.Id, Name = bft.Name },
                             Quantity = blend.Quantity,
-                            BlendAmountUnit = UnitOfMeasure.MeasureUnit.BlendAmountUnits.FirstOrDefault(c => c.Name == WebContext.GetUnitName(blend.Unit))
+                            BlendAmountUnit = UnitOfMeasure.MeasureUnit.BlendAmountUnits.FirstOrDefault(c => c.Name == WebContext.GetUnitName(blend.Unit)),
+                            MixWaterRequirement = waterMix
                         };
 
                     if (blend.Additives != null && blend.Additives.Count > 0)

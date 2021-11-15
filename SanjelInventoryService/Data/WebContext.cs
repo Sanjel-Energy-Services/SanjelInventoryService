@@ -473,6 +473,7 @@ namespace eServiceOnline.Data
     public class Blend : Chemical
     {
         public int Idx { get; set; }
+        public string WaterMix { get; set; }
         public List<Additive> Additives { get; set; }
     }
 
