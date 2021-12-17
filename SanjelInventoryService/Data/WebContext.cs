@@ -264,7 +264,7 @@ namespace eServiceOnline.Data
 
                     foreach (BlendChemicalSection bhs in blendChemicalSectionCollection)
                     {
-                        if (bhs.OwnerId == br.Id)
+                        if (bhs.BlendRecipe.Id == br.Id)
                             br.BlendChemicalSections.Add(bhs);
                     }
                 }
